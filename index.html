@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base de Datos de Alumnos</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Registro de Alumnos</h1>
+        <p>Sistema de gestión de datos escolares</p>
+    </header>
+
+    <main>
+        <section class="formulario">
+            <h2>Datos del alumno</h2>
+
+            <form id="formAlumno">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" required
+                       placeholder="Ingrese el nombre">
+
+                <label for="apellido">Apellido:</label>
+                <input type="text" id="apellido" required
+                       placeholder="Ingrese el apellido">
+
+                <label for="dni">DNI:</label>
+                <input type="text" id="dni" required
+                       placeholder="Ingrese el DNI">
+
+                <label for="curso">Curso:</label>
+                <select id="curso" required>
+                    <option value="">Seleccione el curso</option>
+                    <option>1°</option>
+                    <option>2°</option>
+                    <option>3°</option>
+                    <option>4°</option>
+                    <option>5°</option>
+                    <option>6°</option>
+                    <option>7°</option>
+                </select>
+
+                <label for="division">División:</label>
+                <select id="division" required>
+                    <option value="">Seleccione la división</option>
+                    <option>1ra</option>
+                    <option>2da</option>
+                    <option>3ra</option>
+                </select>
+
+                <label for="anio">Año lectivo:</label>
+                <input type="number" id="anio" min="2000"
+                       max="2100" value="2026" required>
+
+                <label for="escuela">Institución educativa:</label>
+                <input type="text" id="escuela" required
+                       placeholder="Nombre de la escuela">
+
+                <label for="email">Correo electrónico:</label>
+                <input type="email" id="email"
+                       placeholder="alumno@correo.com">
+
+                <button type="submit">Registrar alumno</button>
+            </form>
+        </section>
+
+        <section class="tabla">
+            <h2>Alumnos registrados</h2>
+
+            <div class="contenedor-tabla">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>DNI</th>
+                            <th>Curso</th>
+                            <th>División</th>
+                            <th>Año</th>
+                            <th>Escuela</th>
+                            <th>Correo</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="listaAlumnos">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Sistema de Registro Escolar - 2026</p>
+    </footer>
+
+    <script>
+        const formulario = document.getElementById("formAlumno");
+        const lista = document.getElementById("listaAlumnos");
+
+        formulario.addEventListener("submit", function(evento) {
+            evento.preventDefault();
+
+            const nombre = document.getElementById("nombre").value;
+            const apellido = document.getElementById("apellido").value;
+            const dni = document.getElementById("dni").value;
+            const curso = document.getElementById("curso").value;
+            const division = document.getElementById("division").value;
+            const anio = document.getElementById("anio").value;
+            const escuela = document.getElementById("escuela").value;
+            const email = document.getElementById("email").value;
+
+            const fila = document.createElement("tr");
+
+            [nombre, apellido, dni, curso, division, anio, escuela, email]
+                .forEach(function(dato) {
+                    const celda = document.createElement("td");
+                    celda.textContent = dato;
+                    fila.appendChild(celda);
+                });
+
+            const celdaAccion = document.createElement("td");
+            const botonEliminar = document.createElement("button");
+
+            botonEliminar.textContent = "Eliminar";
+            botonEliminar.className = "btn-eliminar";
+
+            botonEliminar.addEventListener("click", function() {
+                fila.remove();
+            });
+
+            celdaAccion.appendChild(botonEliminar);
+            fila.appendChild(celdaAccion);
+            lista.appendChild(fila);
+
+            formulario.reset();
+            document.getElementById("anio").value = 2026;
+        });
+    </script>
+
+</body>
+</html>
